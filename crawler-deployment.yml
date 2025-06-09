@@ -16,7 +16,7 @@ spec:
         app: synergychat-crawler
     spec:
       containers:
-      - image: bootdotdev/synergychat-crawler:lates
+      - image: bootdotdev/synergychat-crawler:latest
         imagePullPolicy: Always
         name: synergychat-crawler
         envFrom:

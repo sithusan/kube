@@ -1,24 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: synergychat-api
+  name: synergychat-crawler
   labels:
-    app: synergychat-api
+    app: synergychat-crawler
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: synergychat-api
+      app: synergychat-crawler
   template:
     metadata:
       creationTimestamp: null
       labels:
-        app: synergychat-api
+        app: synergychat-crawler
     spec:
       containers:
-      - image: bootdotdev/synergychat-api:latest
+      - image: bootdotdev/synergychat-crawler:lates
         imagePullPolicy: Always
-        name: synergychat-api
+        name: synergychat-crawler
         envFrom:
           - configMapRef:
-              name: synergychat-api-configmap
+              name: synergychat-crawler-configmap
+

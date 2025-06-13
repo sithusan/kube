@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: synergychat-api
   labels:
     app: synergychat-api
+  name: synergychat-api
 spec:
   replicas: 1
   selector:
@@ -11,14 +11,27 @@ spec:
       app: synergychat-api
   template:
     metadata:
-      creationTimestamp: null
       labels:
         app: synergychat-api
     spec:
+      volumes:
+        - name: synergychat-api-volume
+          persistentVolumeClaim:
+            claimName: synergychat-api-pvc
       containers:
-      - image: bootdotdev/synergychat-api:latest
-        imagePullPolicy: Always
-        name: synergychat-api
-        envFrom:
-          - configMapRef:
-              name: synergychat-api-configmap
+        - image: bootdotdev/synergychat-api:latest
+          name: synergychat-api
+          env:
+            - name: API_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: synergychat-api-configmap
+                  key: API_PORT
+            - name: API_DB_FILEPATH
+              valueFrom:
+                configMapKeyRef:
+                  name: synergychat-api-configmap
+                  key: API_DB_FILEPATH
+          volumeMounts:
+            - name: synergychat-api-volume
+              mountPath: /persist
